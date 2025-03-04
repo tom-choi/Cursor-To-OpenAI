@@ -49,6 +49,7 @@ message StreamUnifiedChatWithToolsRequest {
       string content = 1;
       int32 role = 2;
       string messageId = 13;
+      string summaryId = 32;
     }
     message Instruction {
       string instruction = 1;
