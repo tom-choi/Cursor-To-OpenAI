@@ -101,8 +101,8 @@ function chunkToUtf8String(chunk) {
 
       if (magicNumber == 0 || magicNumber == 1) {
         const gunzipData = magicNumber == 0 ? data : zlib.gunzipSync(data)
-        const mesage = $root.StreamUnifiedChatWithToolsResponse.decode(gunzipData);
-        const content = mesage.message.content
+        const message = $root.StreamUnifiedChatWithToolsResponse.decode(gunzipData);
+        const content = message.message.content
         if(content !== undefined)
           results.push(content)
         //console.log(content)
@@ -114,8 +114,9 @@ function chunkToUtf8String(chunk) {
         const message = JSON.parse(utf8)
         if (message != null && (typeof message !== 'object' || 
           (Array.isArray(message) ? message.length > 0 : Object.keys(message).length > 0))){
+            results.push(utf8)
             console.error(utf8)
-        }      
+        }
       }
       else {
         //console.log('Unknown magic number when parsing chunk response: ' + magicNumber)
