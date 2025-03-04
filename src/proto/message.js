@@ -2785,6 +2785,7 @@ $root.StreamUnifiedChatWithToolsRequest = (function() {
              * @property {string|null} [content] Message content
              * @property {number|null} [role] Message role
              * @property {string|null} [messageId] Message messageId
+             * @property {string|null} [summaryId] Message summaryId
              */
 
             /**
@@ -2827,6 +2828,14 @@ $root.StreamUnifiedChatWithToolsRequest = (function() {
             Message.prototype.messageId = "";
 
             /**
+             * Message summaryId.
+             * @member {string} summaryId
+             * @memberof StreamUnifiedChatWithToolsRequest.Request.Message
+             * @instance
+             */
+            Message.prototype.summaryId = "";
+
+            /**
              * Creates a new Message instance using the specified properties.
              * @function create
              * @memberof StreamUnifiedChatWithToolsRequest.Request.Message
@@ -2856,6 +2865,8 @@ $root.StreamUnifiedChatWithToolsRequest = (function() {
                     writer.uint32(/* id 2, wireType 0 =*/16).int32(message.role);
                 if (message.messageId != null && Object.hasOwnProperty.call(message, "messageId"))
                     writer.uint32(/* id 13, wireType 2 =*/106).string(message.messageId);
+                if (message.summaryId != null && Object.hasOwnProperty.call(message, "summaryId"))
+                    writer.uint32(/* id 32, wireType 2 =*/258).string(message.summaryId);
                 return writer;
             };
 
@@ -2902,6 +2913,10 @@ $root.StreamUnifiedChatWithToolsRequest = (function() {
                             message.messageId = reader.string();
                             break;
                         }
+                    case 32: {
+                            message.summaryId = reader.string();
+                            break;
+                        }
                     default:
                         reader.skipType(tag & 7);
                         break;
@@ -2946,6 +2961,9 @@ $root.StreamUnifiedChatWithToolsRequest = (function() {
                 if (message.messageId != null && message.hasOwnProperty("messageId"))
                     if (!$util.isString(message.messageId))
                         return "messageId: string expected";
+                if (message.summaryId != null && message.hasOwnProperty("summaryId"))
+                    if (!$util.isString(message.summaryId))
+                        return "summaryId: string expected";
                 return null;
             };
 
@@ -2967,6 +2985,8 @@ $root.StreamUnifiedChatWithToolsRequest = (function() {
                     message.role = object.role | 0;
                 if (object.messageId != null)
                     message.messageId = String(object.messageId);
+                if (object.summaryId != null)
+                    message.summaryId = String(object.summaryId);
                 return message;
             };
 
@@ -2987,6 +3007,7 @@ $root.StreamUnifiedChatWithToolsRequest = (function() {
                     object.content = "";
                     object.role = 0;
                     object.messageId = "";
+                    object.summaryId = "";
                 }
                 if (message.content != null && message.hasOwnProperty("content"))
                     object.content = message.content;
@@ -2994,6 +3015,8 @@ $root.StreamUnifiedChatWithToolsRequest = (function() {
                     object.role = message.role;
                 if (message.messageId != null && message.hasOwnProperty("messageId"))
                     object.messageId = message.messageId;
+                if (message.summaryId != null && message.hasOwnProperty("summaryId"))
+                    object.summaryId = message.summaryId;
                 return object;
             };
 
