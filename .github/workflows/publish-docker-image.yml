@@ -10,6 +10,8 @@ env:
   MINOR: 0
   PATCH: ${{github.run_number}}
 
+run-name: Publish Docker Image v1.0.${{github.run_number}}
+
 jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
