@@ -18,7 +18,7 @@ router.get("/models", async (req, res) => {
       authToken = authToken.split('::')[1];
     }
 
-    const checksum = req.headers['x-cursor-checksum'] 
+    const cursorChecksum = req.headers['x-cursor-checksum'] 
       ?? generateCursorChecksum(authToken.trim());
     const cursorClientVersion = "0.46.8"
 
@@ -30,8 +30,9 @@ router.get("/models", async (req, res) => {
         'connect-protocol-version': '1',
         'content-type': 'application/proto',
         'user-agent': 'connect-es/1.6.1',
-        'x-cursor-checksum': checksum,
+        'x-cursor-checksum': cursorChecksum,
         'x-cursor-client-version': cursorClientVersion,
+        'x-cursor-config-version': uuidv4(),
         'x-cursor-timezone': 'Asia/Shanghai',
         'x-ghost-mode': 'true',
         'Host': 'api2.cursor.sh',
@@ -93,6 +94,7 @@ router.post('/chat/completions', async (req, res) => {
     const sessionid = uuidv5(authToken,  uuidv5.DNS);
     const clientKey = generateHashed64Hex(authToken)
     const cursorClientVersion = "0.46.8"
+    const cursorConfigVersion = uuidv4();
 
     // Request the AvailableModels before StreamChat.
     const availableModelsResponse = fetch("https://api2.cursor.sh/aiserver.v1.AiService/AvailableModels", {
@@ -107,6 +109,7 @@ router.post('/chat/completions', async (req, res) => {
         'x-client-key': clientKey,
         'x-cursor-checksum': cursorChecksum,
         'x-cursor-client-version': cursorClientVersion,
+        'x-cursor-config-version': cursorConfigVersion,
         'x-cursor-timezone': 'Asia/Shanghai',
         'x-ghost-mode': 'true',
         "x-request-id": uuidv4(),
@@ -132,7 +135,7 @@ router.post('/chat/completions', async (req, res) => {
         'x-client-key': clientKey,
         'x-cursor-checksum': cursorChecksum,
         'x-cursor-client-version': cursorClientVersion,
-        'x-cursor-config-version': uuidv4(),
+        'x-cursor-config-version': cursorConfigVersion,
         'x-cursor-timezone': 'Asia/Shanghai',
         'x-ghost-mode': 'true',
         'x-request-id': uuidv4(),
