@@ -6,7 +6,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  MAJOR: 1
+  MAJOR: 0
   MINOR: 0
   PATCH: ${{github.run_number}}
 
