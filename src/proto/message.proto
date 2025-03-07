@@ -43,13 +43,30 @@ message AvailableModelsResponse {
   repeated string model_names = 1;
 }
 
+message MessageSummary {
+  string content = 1;
+  string summaryId1 = 2; 
+  string summaryId2 = 3; // uuid, equal to summaryId1
+  string previousSummaryId = 4; 
+}
+
 message StreamUnifiedChatWithToolsRequest {
   message Request {
     message Message {
+      message Image {
+        message Metadata {
+          int32 width = 1;
+          int32 height = 2;
+        }
+        bytes data = 1;
+        Metadata metadata = 2;
+      }
       string content = 1;
       int32 role = 2;
+      Image image = 10;
       string messageId = 13;
       string summaryId = 32;
+      MessageSummary summary = 39;
     }
     message Instruction {
       string instruction = 1;
@@ -58,6 +75,7 @@ message StreamUnifiedChatWithToolsRequest {
       string name = 1;
       bytes empty = 4;
     }
+
     message CursorSetting {
       message Unknown6 {
         bytes unknown1 = 1;
