@@ -83,9 +83,10 @@ router.post('/chat/completions', async (req, res) => {
     }
 
     if (!messages || !Array.isArray(messages) || messages.length === 0 || !authToken) {
-      return res.status(400).json({
-        error: 'Invalid request. Messages should be a non-empty array and authorization is required',
-      });
+      return res.status(400)
+                .json({
+                  error: 'Invalid request. Messages should be a non-empty array and authorization is required',
+                });
     }
 
     const cursorChecksum = req.headers['x-cursor-checksum']
@@ -148,7 +149,12 @@ router.post('/chat/completions', async (req, res) => {
         connect: 5000,
         read: 30000
       }
-    });    
+    });
+
+    if (response.status !== 200) {
+      return res.status(response.status)
+                .json({ error: response.statusText });
+    }
 
     if (stream) {
       res.setHeader('Content-Type', 'text/event-stream');
